@@ -38,12 +38,12 @@ http.createServer((req, res) => {
     console.log("Requested URL:", url);
 
     switch (url) {
-        case "/project.html":
+        case "/project":
             console.log("Sending projectFile");
             res.write(projectFile);
             res.end();
             break;
-        case "/registration.html":
+        case "/registration":
             console.log("Sending registrationFile");
             res.write(registrationFile);
             res.end();

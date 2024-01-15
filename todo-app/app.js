@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const express = require("express");
 const app = express();
@@ -10,18 +11,33 @@ const { Todo } = require("./models");
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
-  const allTodos = await Todo.getTodos();
+  // if(req.accepts("html")){
+  //   const alltodos = await Todo.getTodos();
+  //   const duetoday = await Todo.dueToday();
+  //   const overdue = await Todo.overdue();
+  //   const duelater = await Todo.dueLater();
+  //   res.render("index",{alltodos,duetoday,overdue,duelater});
+  // } else {
+  //   res.json(alltodos,duetoday,overdue,duelater);
+  // }
   if (req.accepts("html")) {
-    res.render("index", { allTodos });
+    res.render("index", { alltodos });
   } else {
-    res.json({ allTodos });
+    res.json({ alltodos });
   }
+  
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/todos", async (req, res) => {
   console.log("Processing list of all todos ...");
+  // const alltodos = await Todo.getTodos();
+  // if (req.accepts("html")) {
+  //   res.render("index", { alltodos });
+  // } else {
+  //   res.json({ alltodos });
+  // }
   try {
     const todos = await Todo.findAll();
     console.log(todos);

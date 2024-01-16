@@ -11,44 +11,44 @@ const { Todo } = require("./models");
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
-  // if(req.accepts("html")){
-  //   const alltodos = await Todo.getTodos();
-  //   const duetoday = await Todo.dueToday();
-  //   const overdue = await Todo.overdue();
-  //   const duelater = await Todo.dueLater();
-  //   res.render("index",{alltodos,duetoday,overdue,duelater});
-  // } else {
-  //   res.json(alltodos,duetoday,overdue,duelater);
-  // }
-  if (req.accepts("html")) {
+  if(req.accepts("html")){
     const alltodos = await Todo.getTodos();
-    res.render("index", { alltodos });
+    const duetoday = await Todo.dueToday();
+    const overdue = await Todo.overdue();
+    const duelater = await Todo.dueLater();
+    res.render("index",{alltodos,duetoday,overdue,duelater});
   } else {
-    res.json({ alltodos });
+    res.json(alltodos,duetoday,overdue,duelater);
   }
+  // if (req.accepts("html")) {
+  //   const alltodos = await Todo.getTodos();
+  //   res.render("index", { alltodos });
+  // } else {
+  //   res.json({ alltodos });
+  // }
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/todos", async (req, res) => {
   console.log("Processing list of all todos ...");
-  // if(req.accepts("html")){
-  //   const alltodos = await Todo.getTodos();
-  //   const duetoday = await Todo.dueToday();
-  //   const overdue = await Todo.overdue();
-  //   const duelater = await Todo.dueLater();
-  //   res.render("index",{alltodos,duetoday,overdue,duelater});
-  // } else {
-  //   res.json(alltodos,duetoday,overdue,duelater);
-  // }
-  try {
-    const todos = await Todo.findAll();
-    console.log(todos);
-    return res.send(todos);
-  } catch (err) {
-    console.log(err);
-    return res.status(422).json(err);
+  if(req.accepts("html")){
+    const alltodos = await Todo.getTodos();
+    const duetoday = await Todo.dueToday();
+    const overdue = await Todo.overdue();
+    const duelater = await Todo.dueLater();
+    res.render("index",{alltodos,duetoday,overdue,duelater});
+  } else {
+    res.json(alltodos,duetoday,overdue,duelater);
   }
+  // try {
+  //   const todos = await Todo.findAll();
+  //   console.log(todos);
+  //   return res.send(todos);
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(422).json(err);
+  // }
 });
 
 app.get("/todos/:id", async function (request, response) {

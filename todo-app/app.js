@@ -21,22 +21,25 @@ app.get("/", async (req, res) => {
   //   res.json(alltodos,duetoday,overdue,duelater);
   // }
   if (req.accepts("html")) {
+    const alltodos = await Todo.getTodos();
     res.render("index", { alltodos });
   } else {
     res.json({ alltodos });
   }
-  
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/todos", async (req, res) => {
   console.log("Processing list of all todos ...");
-  // const alltodos = await Todo.getTodos();
-  // if (req.accepts("html")) {
-  //   res.render("index", { alltodos });
+  // if(req.accepts("html")){
+  //   const alltodos = await Todo.getTodos();
+  //   const duetoday = await Todo.dueToday();
+  //   const overdue = await Todo.overdue();
+  //   const duelater = await Todo.dueLater();
+  //   res.render("index",{alltodos,duetoday,overdue,duelater});
   // } else {
-  //   res.json({ alltodos });
+  //   res.json(alltodos,duetoday,overdue,duelater);
   // }
   try {
     const todos = await Todo.findAll();

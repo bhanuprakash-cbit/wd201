@@ -4,14 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Todo-Manager</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-    <%- include('header.ejs') %>
-    <%- include('todos.ejs', { dueToday: duetoday, overdue: overdue, dueLater: duelater }) %>
-    <%- include('footer.ejs') %>
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <%- include('header.ejs') %>
+                <form action="">
+                    <div class="flex gap-2 py-4">
+                        <div class="flex-auto">
+                            <input type="text" placeholder="What's next??"
+                                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required>
+                        </div>
+                        <div class="flex-auto">
+                            <input type="date"
+                                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4"
+                                required>
+                        </div>
+                        <div class="flex-none">
+                            <button type="submit"
+                                class="bg-green-600 text-white rounded px-5 py-1.5 mr-2 mb font-medium">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <%- include('todos.ejs', { dueToday: duetoday, overdue: overdue, dueLater: duelater }) %>
+                    <%- include('footer.ejs') %>
+
+        </div>
+    </div>
+    </div>
+
+
 </body>
 
 </html>

@@ -92,9 +92,10 @@
             <% for (var i=0; i < overdue.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="checkbox<%= overdue[i].id %>"
+                        <input type="checkbox" name="" id="count-overdue<%= overdue[i].id %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="checkbox<%= overdue[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-overdue<%= overdue[i].id %>"
+                            class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= overdue[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -116,9 +117,10 @@
             <% for (var i=0; i < dueToday.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="checkbox<%= dueToday[i].id %>"
+                        <input type="checkbox" name="" id="count-due-today<%= dueToday[i].id %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="checkbox<%= dueToday[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-today<%= dueToday[i].id %>"
+                            class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueToday[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -140,9 +142,10 @@
             <% for (var i=0; i < dueLater.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="checkbox<%= dueLater[i].id %>"
+                        <input type="checkbox" name="" id="count-due-later<%= dueLater[i].id %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="checkbox<%= dueLater[i].id %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-later<%= dueLater[i].id %>"
+                            class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueLater[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">

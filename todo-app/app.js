@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const path = require("path");
+//app.use(express.urlencoded({ extended: false }))
 
 const { Todo } = require("./models");
 
@@ -69,6 +70,7 @@ app.post("/todos", async (req, res) => {
       dueDate: req.body.dueDate,
     });
     return res.json(todo);
+    //return res.redirect("/")
   } catch (err) {
     console.log(err);
     return res.status(422).json(err);

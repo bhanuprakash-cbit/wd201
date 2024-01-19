@@ -92,9 +92,9 @@
             <% for (var i=0; i < overdue.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-overdue<%= i %>"
+                        <input type="checkbox" name="" id="count-overdue"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-overdue<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-overdue" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= overdue[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -116,9 +116,9 @@
             <% for (var i=0; i < dueToday.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-today<%= i %>"
+                        <input type="checkbox" name="" id="count-due-today"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-today<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-today" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueToday[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -140,9 +140,9 @@
             <% for (var i=0; i < dueLater.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-later<%= i %>"
+                        <input type="checkbox" name="" id="count-due-later"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-later<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-later" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueLater[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">

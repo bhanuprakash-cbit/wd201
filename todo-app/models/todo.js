@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     markAsCompleted() {
       return this.update({ completed: true });
     }
+
+    static async remove(id) {
+      return this.destroy({
+        where: {
+          id,
+        }
+      })
+    }
     
     static async dueToday () {
       return this.findAll({

@@ -7,14 +7,67 @@
     <title>My Todo-Manager</title>
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        async function updateTodo(id) {
+            console.log("Updating todo with id:", id);
+            try {
+                const response = await fetch(`/todos/${id}/markAsCompleted`, {
+                    method: "put",
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                console.log("Response status:", response.status);
+                console.log("Response body:", await response.json());
+
+                if (response.ok) {
+                    console.log("Todo updated successfully");
+                    //window.location.reload();
+                } else {
+                    console.error("Failed to update todo");
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+
+        // function updateTodo(id) {
+        //     console.log("Updating todo with id:", id);
+        //     fetch(`/todos/${id}/markAsCompleted`, {
+        //         method: "put",
+        //         headers: { "Content-Type": "application/json" },
+        //     })
+        //         .then((res) => {
+        //             if (res.ok) {
+        //                 console.log("Todo updated successfully");
+        //                 window.location.reload()
+        //             } else {
+        //                 console.error("Failed to update todo: ", res.status, res.statusText)
+        //             }
+        //         })
+        //         .catch((err) => console.error(err))
+        // }
+        function deleteTodo(id) {
+            console.log("Deleting todo with id:", id);
+            fetch(`/todos/${id}`, {
+                method: "delete",
+                headers: { "Content-Type": "application/json" },
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        window.location.reload()
+                    }
+                })
+                .catch((err) => console.log(err))
+        }
+    </script>
 </head>
 
 <body>
     <div class="grid grid-cols-6">
         <div class="col-start-3 col-span-2">
             <%- include('header.ejs') %>
-                <form>
-                    <!-- <form action="/todos" method="post"> -->
+                <form action="/todos" method="post">
                     <div class="flex gap-2 py-4">
                         <div class="flex-auto">
                             <input type="text" placeholder="What's next??" name="title"
@@ -31,8 +84,11 @@
                         </div>
                     </div>
                 </form>
-                <%- include('todos.ejs', { dueToday: duetoday, overdue: overdue, dueLater: duelater }) %>
-                    <%- include('footer.ejs') %>
+
+                <%- include('todo.ejs', {title: "Overdue" , data: overdue}) %>
+                    <%- include('todo.ejs', {title: "Due Today" , data: duetoday}) %>
+                        <%- include('todo.ejs', {title: "Due Later" , data: duelater}) %>
+                            <%- include('footer.ejs') %>
 
         </div>
     </div>

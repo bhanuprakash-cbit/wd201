@@ -2,10 +2,14 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const app = express();
+// var csrf = require("csurf")
+// var cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+// app.use(cookieParser("shh! some secret string"))
+// app.use(csrf({ cookie: true }))
 const path = require("path");
-//app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
 const { Todo } = require("./models");
 
@@ -69,8 +73,8 @@ app.post("/todos", async (req, res) => {
       title: req.body.title,
       dueDate: req.body.dueDate,
     });
-    return res.json(todo);
-    //return res.redirect("/")
+    //return res.json(todo);
+    return res.redirect("/")
   } catch (err) {
     console.log(err);
     return res.status(422).json(err);
@@ -91,16 +95,22 @@ app.put("/todos/:id/markAsCompleted", async (req, res) => {
 
 app.delete("/todos/:id", async (req, res) => {
   console.log("We have deleted todo by ID: ", req.params.id);
-  const todo = await Todo.findByPk(req.params.id);
+  // const todo = await Todo.findByPk(req.params.id);
+  // try {
+  //   if (!todo) {
+  //     return res.send(false);
+  //   }
+  //   todo.destroy();
+  //   return res.send(true);
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(422).json(err);
+  // }
   try {
-    if (!todo) {
-      return res.send(false);
-    }
-    todo.destroy();
-    return res.send(true);
+    await Todo.remove(req.params.id)
+    return res.json({ success: true })
   } catch (err) {
-    console.log(err);
-    return res.status(422).json(err);
+    return res.status(422).json(err)
   }
 });
 

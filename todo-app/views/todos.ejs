@@ -86,16 +86,15 @@
 
     <div>
         <h5>Overdue</h5>
-        <h6>Count = <%= overdue.length %>
-        </h6>
+        <h10 class="text-sm">Count = <%= overdue.length %>
+        </h10>
         <ul class="list-none">
             <% for (var i=0; i < overdue.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-overdue<%= overdue[i].id %>"
+                        <input type="checkbox" name="" id="count-overdue<%= i %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-overdue<%= overdue[i].id %>"
-                            class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-overdue<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= overdue[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -111,16 +110,15 @@
                 <% } %>
         </ul>
         <h5>Due Today</h5>
-        <h6>Count = <%= dueToday.length %>
-        </h6>
+        <h10 class="text-sm">Count = <%= dueToday.length %>
+        </h10>
         <ul class="list-none">
             <% for (var i=0; i < dueToday.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-today<%= dueToday[i].id %>"
+                        <input type="checkbox" name="" id="count-due-today<%= i %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-today<%= dueToday[i].id %>"
-                            class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-today<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueToday[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">
@@ -136,16 +134,15 @@
                 <% } %>
         </ul>
         <h5>Due Later</h5>
-        <h6>Count = <%= dueLater.length %>
-        </h6>
+        <h10 class="text-sm">Count = <%= dueLater.length %>
+        </h10>
         <ul class="list-none">
             <% for (var i=0; i < dueLater.length; i++) { %>
                 <li class="Todo-Item">
                     <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-later<%= dueLater[i].id %>"
+                        <input type="checkbox" name="" id="count-due-later<%= i %>"
                             class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-later<%= dueLater[i].id %>"
-                            class="ml-2 text-sm text-gray-600 cursor-pointer">
+                        <label for="count-due-later<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
                             <%= dueLater[i].title %>
                         </label>
                         <a href="" class="ml-2 hidden trash-icon">

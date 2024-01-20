@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll({
         where: {
           dueDate: { [Op.eq]: new Date().toISOString().split("T")[0] },
-          completed: false,
         },
         order: [["id", "ASC"]],
       })
@@ -43,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll({
         where: {
           dueDate: { [Op.lt]: new Date().toISOString().split("T")[0] },
-          completed: false,
         },
         order: [["id", "ASC"]],
       })
@@ -52,7 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll({
         where: {
           dueDate: { [Op.gt]: new Date().toISOString().split("T")[0] },
-          completed: false,
         },
         order: [["id", "ASC"]],
       })

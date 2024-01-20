@@ -2,12 +2,14 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const app = express();
-// var csrf = require("csurf")
-// var cookieParser = require("cookie-parser")
+// var csrf = require("tiny-csrf")
+var csrf = require("csurf")
+var cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-// app.use(cookieParser("shh! some secret string"))
-// app.use(csrf({ cookie: true }))
+app.use(cookieParser("shh! some secret string"))
+// app.use(csrf("123456789iamasecret987654321look", ["POST", "PUT", "DELETE"]))
+app.use(csrf( { cookie: true }))
 const path = require("path");
 app.use(express.urlencoded({ extended: false }))
 
@@ -16,14 +18,18 @@ const { Todo } = require("./models");
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
-  if(req.accepts("html")){
-    const alltodos = await Todo.getTodos();
-    const duetoday = await Todo.dueToday();
-    const overdue = await Todo.overdue();
-    const duelater = await Todo.dueLater();
-    res.render("index",{alltodos,duetoday,overdue,duelater});
+  const duetoday = await Todo.dueToday();
+  const overdue = await Todo.overdue();
+  const duelater = await Todo.dueLater();
+  if(req.accepts("html")){ 
+    res.render("index", {
+      duetoday,
+      overdue,
+      duelater,
+      csrfToken: req.csrfToken(),
+    });
   } else {
-    res.json(alltodos,duetoday,overdue,duelater);
+    res.json(duetoday,overdue,duelater);
   }
   // if (req.accepts("html")) {
   //   const alltodos = await Todo.getTodos();

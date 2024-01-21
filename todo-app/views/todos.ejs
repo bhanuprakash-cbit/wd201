@@ -4,163 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>My Todo-Manager</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        function updateTodo(id) {
+            console.log("Updating todo with id:", id);
+            fetch(`/todos/${id}`, {
+                method: "put",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        console.log("Todo updated successfully");
+                        window.location.reload()
+                    } else {
+                        console.error("Failed to update todo: ", res.status, res.statusText)
+                    }
+                })
+                .catch((err) => console.error(err))
+        }
+        function deleteTodo(id) {
+            console.log("Deleting todo with id:", id);
+            fetch(`/todos/${id}`, {
+                method: "delete",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        window.location.reload()
+                    }
+                })
+                .catch((err) => console.log(err))
+        }
+    </script>
 </head>
 
 <body>
-    <!-- <h1>Due Today</h1>
-    <table style="border-color: black; border: 1px solid; width: 50;">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Due Date</th>
-            <th>Status</th>
-        </tr>
-        <% for (var i=0; i < dueToday.length; i++) { %>
-            <tr>
-                <td>
-                    <%= dueToday[i].id %>
-                </td>
-                <td>
-                    <%= dueToday[i].title %>
-                </td>
-                <td>
-                    <%= dueToday[i].dueDate %>
-                </td>
-                <td>
-                    <%= dueToday[i].completed ? true : false %>
-                </td>
-            </tr>
-            <% } %>
-    </table>
-    <h1>Overdue</h1>
-    <table style="border-color: black; border: 1px solid; width: 50;">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Due Date</th>
-            <th>Status</th>
-        </tr>
-        <% for (var i=0; i < overdue.length; i++) { %>
-            <tr>
-                <td>
-                    <%= overdue[i].id %>
-                </td>
-                <td>
-                    <%= overdue[i].title %>
-                </td>
-                <td>
-                    <%= overdue[i].dueDate %>
-                </td>
-                <td>
-                    <%= overdue[i].completed ? true : false %>
-                </td>
-            </tr>
-            <% } %>
-    </table>
-    <h1>Due Later</h1>
-    <table style="border-color: black; border: 1px solid; width: 50;">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Due Date</th>
-            <th>Status</th>
-        </tr>
-        <% for (var i=0; i < dueLater.length; i++) { %>
-            <tr>
-                <td>
-                    <%= dueLater[i].id %>
-                </td>
-                <td>
-                    <%= dueLater[i].title %>
-                </td>
-                <td>
-                    <%= dueLater[i].dueDate %>
-                </td>
-                <td>
-                    <%= dueLater[i].completed ? true : false %>
-                </td>
-            </tr>
-            <% } %>
-    </table> -->
-
-    <div>
-        <h5>Overdue</h5>
-        <b id="count-overdue">
-            <%= overdue.length %>
-        </b>
-        <ul class="list-none">
-            <% for (var i=0; i < overdue.length; i++) { %>
-                <li class="Todo-Item">
-                    <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-overdue<%= i %>"
-                            class="w-4 h-4 border border-gray-300">
-                        <label for="count-overdue<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
-                            <%= overdue[i].title %>
-                        </label>
-                        <a href="" class="ml-2 hidden trash-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
-
-                        </a>
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <%- include('header.ejs') %>
+                <a href="/signout">Signout</a>
+                <form action="/todos" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="flex gap-2 py-4">
+                        <div class="flex-auto">
+                            <input type="text" placeholder="What's next??" name="title"
+                                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required>
+                        </div>
+                        <div class="flex-auto">
+                            <input type="date" name="dueDate"
+                                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4"
+                                required>
+                        </div>
+                        <div class="flex-none">
+                            <button type="submit"
+                                class="bg-green-600 text-white rounded px-5 py-1.5 mr-2 mb font-medium">Add</button>
+                        </div>
                     </div>
-                </li>
-                <% } %>
-        </ul>
-        <h5>Due Today</h5>
-        <b id="count-due-today">
-            <%= dueToday.length %>
-        </b>
-        <ul class="list-none">
-            <% for (var i=0; i < dueToday.length; i++) { %>
-                <li class="Todo-Item">
-                    <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-today<%= i %>"
-                            class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-today<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
-                            <%= dueToday[i].title %>
-                        </label>
-                        <a href="" class="ml-2 hidden trash-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
+                </form>
 
-                        </a>
-                    </div>
-                </li>
-                <% } %>
-        </ul>
-        <h5>Due Later</h5>
-        <b id="count-due-later">
-            <%= dueLater.length %>
-        </b>
-        <ul class="list-none">
-            <% for (var i=0; i < dueLater.length; i++) { %>
-                <li class="Todo-Item">
-                    <div class="flex my-2 px-2 py-1 w-fit items-center rounded hover:bg-purple-50">
-                        <input type="checkbox" name="" id="count-due-later<%= i %>"
-                            class="w-4 h-4 border border-gray-300">
-                        <label for="count-due-later<%= i %>" class="ml-2 text-sm text-gray-600 cursor-pointer">
-                            <%= dueLater[i].title %>
-                        </label>
-                        <a href="" class="ml-2 hidden trash-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
+                <%- include('todo.ejs', {title: "Overdue" , data: overdue, todoID: "count-overdue" }) %>
+                    <%- include('todo.ejs', {title: "Due Today" , data: duetoday, todoID: "count-due-today" }) %>
+                        <%- include('todo.ejs', {title: "Due Later" , data: duelater, todoID: "count-due-later" }) %>
+                            <%- include('todo.ejs', {title: "Completed Todos" , data: completedTodos,
+                                todoID: "count-completed" }) %>
+                                <%- include('footer.ejs') %>
 
-                        </a>
-                    </div>
-                </li>
-                <% } %>
-        </ul>
+        </div>
     </div>
+    </div>
+
+
 </body>
 
 </html>

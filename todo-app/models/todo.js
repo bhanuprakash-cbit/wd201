@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 "use strict";
-const { Model,Op } = require("sequelize");
+const { Model,Op, where } = require("sequelize");
 //const { Sequelize } = require(".");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -10,57 +10,68 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Todo.belongsTo(models.User, {
+        foreignKey: 'userId'
+      })
     }
     static getTodos() {
-      return this.findAll();
+      return this.findAll({
+        where: {
+          userId,
+        }
+    });
     }
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({ title: title, dueDate: dueDate, completed: false, userId });
     }
     setCompletionStatus(val) {
       console.log(val)
       return this.update({ completed: val });
     }
 
-    static async remove(id) {
+    static async remove(id, userId) {
       return this.destroy({
         where: {
           id,
+          userId: userId,
         }
       })
     }
     
-    static async dueToday () {
+    static async dueToday (userId) {
       return this.findAll({
         where: {
           dueDate: { [Op.eq]: new Date().toISOString().split("T")[0] },
+          userId,
           completed: false
         },
         order: [["id", "ASC"]],
       })
     }
-    static async overdue () {
+    static async overdue (userId) {
       return this.findAll({
         where: {
           dueDate: { [Op.lt]: new Date().toISOString().split("T")[0] },
+          userId,
           completed: false
         },
         order: [["id", "ASC"]],
       })
     }
-    static async dueLater () {
+    static async dueLater (userId) {
       return this.findAll({
         where: {
           dueDate: { [Op.gt]: new Date().toISOString().split("T")[0] },
+          userId,
           completed: false
         },
         order: [["id", "ASC"]],
       })
     }
-    static async completedTodos () {
+    static async completedTodos (userId) {
       return this.findAll({
         where: {
+          userId,
           completed: true
         }
       })

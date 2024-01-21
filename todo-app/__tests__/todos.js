@@ -45,31 +45,31 @@ describe("Todo Application", function () {
     // expect(parsedResponse.id).toBeDefined();
   });
 
-  // test("Marks a todo with the given ID as complete", async () => {
-  //   let res = await agent.get("/")
-  //   let csrfToken = extractCsrfToken(res)
-  //   await agent.post("/todos").send({
-  //     title: "Buy milk",
-  //     dueDate: new Date().toISOString(),
-  //     completed: false,
-  //     "_csrf": csrfToken
-  //   });
+  test("Marks a todo with the given ID as complete", async () => {
+    let res = await agent.get("/")
+    let csrfToken = extractCsrfToken(res)
+    await agent.post("/todos").send({
+      title: "Buy milk",
+      dueDate: new Date().toISOString(),
+      completed: false,
+      _csrf: csrfToken
+    });
 
-  //   const groupedTodosResponse = await agent.get("/").set("Accept", "application/json")
-  //   const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text)
+    const groupedTodosResponse = await agent.get("/").set("Accept", "application/json")
+    const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text)
 
-  //   const dueTodayCount = parsedGroupedResponse.dueToday.length
-  //   const latestTodo = parsedGroupedResponse.dueToday[dueTodayCount - 1]
+    const dueTodayCount = parsedGroupedResponse.duetoday.length
+    const latestTodo = parsedGroupedResponse.duetoday[dueTodayCount - 1]
 
-  //   res = await agent.get("/")
-  //   csrfToken = extractCsrfToken(res)
+    res = await agent.get("/")
+    csrfToken = extractCsrfToken(res)
 
-  //   const markCompleteResponse = await agent.put(`/todos/${latestTodo.id}`).send({
-  //       _csrf: csrfToken,
-  //     });
-  //   const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
-  //   expect(parsedUpdateResponse.completed).toBe(true);
-  // });
+    const markCompleteResponse = await agent.put(`/todos/${latestTodo.id}`).send({
+        _csrf: csrfToken,
+      });
+    const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
+    expect(parsedUpdateResponse.completed).toBe(true);
+  });
 
   // test("Fetches all todos in the database using /todos endpoint", async () => {
   //   await agent.post("/todos").send({

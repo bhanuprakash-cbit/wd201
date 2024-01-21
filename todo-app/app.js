@@ -130,10 +130,16 @@ app.get("/signout", (req,res,next) => {
 })
 
 app.get("/", async (req, res) => {
-  res.render("index", {
-      title: "Todo Application",
-      csrfToken: req.csrfToken(),
-    });
+  if (req.isAuthenticated()) {
+    return res.redirect("/todos")
+  } else {
+    if (req.accepts("html")) {
+      res.render("index", {
+        title: "Todo Application",
+        csrfToken: req.csrfToken(),
+      });
+    }
+  }
 });
 
 app.use(express.static(path.join(__dirname, "public")));

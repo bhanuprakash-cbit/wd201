@@ -74,7 +74,7 @@ describe("Todo Application", function () {
     expect(response.statusCode).toBe(302);
   });
 
-  // test("Marks a todo with the given ID as complete", async () => {
+  test("Marks a todo with the given ID as complete", async () => {
   //   const agent = request.agent(server)
   //   await login(agent, "user.a@test.com", "12345678")
   //   let res = await agent.get("/todos")
@@ -103,7 +103,7 @@ describe("Todo Application", function () {
   //     });
   //   const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
   //   expect(parsedUpdateResponse.completed).toBe(true);
-  // });
+  });
 
   // test("Fetches all todos in the database using /todos endpoint", async () => {
   //   await agent.post("/todos").send({
@@ -123,7 +123,7 @@ describe("Todo Application", function () {
   //   expect(parsedResponse[3]["title"]).toBe("Buy ps3");
   // });
 
-  // test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
+  test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
   //   const agent = request.agent(server)
   //   await login(agent, "user.a@test.com", "12345678")
   //   let res = await agent.get("/todos");
@@ -150,5 +150,5 @@ describe("Todo Application", function () {
   //     _csrf: csrfToken,
   //   })
   //   expect(deletedResponse.statusCode).toBe(200)
-  // });
+  });
 });
